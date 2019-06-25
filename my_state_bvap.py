@@ -28,11 +28,11 @@ from gerrychain.tree import recursive_tree_part
 def draw_plot(data, offset, edge_color, fill_color):
     pos = 5*np.arange(data.shape[1])+1+offset
     #bp = ax.boxplot(data, positions= pos, widths=0.3, patch_artist=True, manage_xticks=False)
-    bp = ax.boxplot(data, positions= pos,widths=.5, whis=[1,99],showfliers=False, patch_artist=True, manage_xticks=False,zorder=0)
+    bp = ax.boxplot(data, positions= pos,widths=.5, whis=[1,99],showfliers=False, patch_artist=True, manage_xticks=False,zorder=4)
     for element in ['boxes', 'whiskers', 'medians', 'caps']:
-        plt.setp(bp[element], color=edge_color,zorder=0)
+        plt.setp(bp[element], color=edge_color,zorder=4)
     for patch in bp['boxes']:
-        patch.set(facecolor=fill_color,zorder=4)
+        patch.set(facecolor=fill_color,zorder=0)
 
 state_abbr = "AR"
 state_fip = "05"
@@ -48,7 +48,7 @@ with open(newdir + "init.txt", "w") as f:
 County_graph = Graph.from_json("./County/dual_graphs/County"+state_fip+".json")
 COUSUB_graph = Graph.from_json("./County_Subunits/COUSUB"+state_fip+".json")
 Tract_graph = Graph.from_json("./Tracts/Tract"+state_fip+".json")
-BG_graph = Graph.from_json("./Tracts/Tract"+state_fip+".json")#("./Block_Group/BG"+state_fip+".json")
+BG_graph = Graph.from_json("./Block_Groups/BG"+state_fip+".json")#("./Tracts/Tract"+state_fip+".json")#
 
 unique_label = "GEOID10"
 pop_col = "TOTPOP"
