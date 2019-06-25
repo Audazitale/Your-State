@@ -26,7 +26,7 @@ from gerrychain.tree import recursive_tree_part
 
 
 def draw_plot(data, offset, edge_color, fill_color):
-    pos = 10*np.arange(data.shape[1])+1+offset
+    pos = 5*np.arange(data.shape[1])+1+offset
     #bp = ax.boxplot(data, positions= pos, widths=0.3, patch_artist=True, manage_xticks=False)
     bp = ax.boxplot(data, positions= pos,widths=.18, whis=[1,99],showfliers=False, patch_artist=True, manage_xticks=False,zorder=4)
     for element in ['boxes', 'whiskers', 'medians', 'caps']:
@@ -53,9 +53,9 @@ BG_graph = Graph.from_json("./Tracts/Tract"+state_fip+".json")#("./Block_Group/B
 unique_label = "GEOID10"
 pop_col = "TOTPOP"
 
-graph_list = [County_graph,COUSUB_graph,Tract_graph,BG_graph]
+graph_list = [COUSUB_graph,County_graph,Tract_graph,BG_graph]
 
-vap_list = ["VAP","VA","VAP","VAP"]
+vap_list = ["VA","VAP","VAP","VAP"]
 totpop = [0,0,0,0]
 for i in range(4):
     graph=graph_list[i]
@@ -123,7 +123,7 @@ for i in range(4):
 
 
 colors = ['hotpink','goldenrod','green','purple']
-labels= ['County','COUSUB','Tract','Block Group']
+labels= ['COUSUB','County','Tract','Block Group']
 plt.figure()
 for i in range(4):
     sns.distplot(cuts[i],kde=False, color=colors[i],label=labels[i])
@@ -132,10 +132,10 @@ plt.ylabel("Cut Edges")
 plt.show()
 
 fig, ax = plt.subplots()
-draw_plot(np.array(BVAPS[0]),-3,colors[0],None)
-draw_plot(np.array(BVAPS[1]),-1,colors[1],None)
-draw_plot(np.array(BVAPS[2]),1,colors[2],None)
-draw_plot(np.array(BVAPS[3]),3,colors[3],None)
+draw_plot(np.array(BVAPS[0]),-1.5,colors[0],None)
+draw_plot(np.array(BVAPS[1]),-.5,colors[1],None)
+draw_plot(np.array(BVAPS[2]),.5,colors[2],None)
+draw_plot(np.array(BVAPS[3]),1.5,colors[3],None)
 plt.ylabel("BVAP%")
 for i in range(4):
     plt.plot([],[],color=colors[i],label=labels[i])
