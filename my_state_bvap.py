@@ -105,7 +105,7 @@ for i in range(4):
         ],
         accept=accept.always_accept,
         initial_state=initial_partitions[i],
-        total_steps=100
+        total_steps=1000
     ))
 
 cuts=[[],[],[],[]]
@@ -117,7 +117,7 @@ for i in range(4):
         cuts[i].append(len(part["cut_edges"]))
         BVAPS[i].append(sorted(part["BVAP"].percents("BVAP")))
         t+=1
-        if t%10 ==0:
+        if t%100 ==0:
             print("chain",i,"step",t)
     print(f"finished chain {i}")
 
