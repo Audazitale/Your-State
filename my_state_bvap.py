@@ -40,7 +40,7 @@ num_districts = 4
 
 
 
-newdir = "./Outputs/"+state_abbr+housen+"_BG/"
+newdir = "./Outputs/"+state_abbr+"/"
 os.makedirs(os.path.dirname(newdir + "init.txt"), exist_ok=True)
 with open(newdir + "init.txt", "w") as f:
     f.write("Created Folder")
@@ -48,7 +48,7 @@ with open(newdir + "init.txt", "w") as f:
 County_graph = Graph.from_json("./County/dual_graphs/County"+state_fip+".json")
 COUSUB_graph = Graph.from_json("./County_Subunits/COUSUB"+state_fip+".json")
 Tract_graph = Graph.from_json("./Tracts/Tract"+state_fip+".json")
-BG_graph = Graph.from_json("./Block_Group/BG"+state_fip+".json")
+BG_graph = Graph.from_json("./Tracts/Tract"+state_fip+".json")#("./Block_Group/BG"+state_fip+".json")
 
 unique_label = "GEOID10"
 pop_col = "TOTPOP"
@@ -90,7 +90,7 @@ for i in range(4):
 
 
     proposals.append(partial(
-        recom, pop_col="TOTPOP", pop_target=totpop[i], epsilon=0.02, node_repeats=1
+        recom, pop_col="TOTPOP", pop_target=totpop[i]/num_districts, epsilon=0.02, node_repeats=1
     ))
 
     compactness_bounds.append(constraints.UpperBound(
@@ -111,12 +111,15 @@ for i in range(4):
 cuts=[[],[],[],[]]
 BVAPS=[[],[],[],[]]
 
-t = 0
 for i in range(4):
+    t = 0
     for part in chains[i]:
         cuts[i].append(len(part["cut_edges"]))
         BVAPS[i].append(sorted(part["BVAP"].percents("BVAP")))
         t+=1
+        if t%10 ==0:
+            print("chain",i,"step",t)
+    print(f"finished chain {i}")
 
 
 colors = ['hotpink','goldenrod','green','purple']
@@ -128,11 +131,11 @@ plt.legend()
 plt.ylabel("Cut Edges")
 plt.show()
 
-plt.figure()
+fig, ax = plt.subplots()
 draw_plot(np.array(BVAPS[0]),-3,colors[0],None)
 draw_plot(np.array(BVAPS[1]),-1,colors[1],None)
 draw_plot(np.array(BVAPS[2]),1,colors[2],None)
-draw_plot(np.array(BVAPS[3]),3,colors[i3],None)
+draw_plot(np.array(BVAPS[3]),3,colors[3],None)
 plt.ylabel("BVAP%")
 for i in range(4):
     plt.plot([],[],color=colors[i],label=labels[i])
