@@ -53,9 +53,9 @@ BG_graph = Graph.from_json("./Block_Groups/BG"+state_fip+".json")#("./Tracts/Tra
 unique_label = "GEOID10"
 pop_col = "TOTPOP"
 
-graph_list = [COUSUB_graph,County_graph,Tract_graph,BG_graph]
+graph_list = [BG_graph,COUSUB_graph,Tract_graph,County_graph]
 
-vap_list = ["VA","VAP","VAP","VAP"]
+vap_list = ["VAP","VA","VAP","VAP"]
 totpop = [0,0,0,0]
 for i in range(4):
     graph=graph_list[i]
@@ -123,7 +123,7 @@ for i in range(4):
 
 
 colors = ['hotpink','goldenrod','green','purple']
-labels= ['COUSUB','County','Tract','Block Group']
+labels= ['Block Group','COUSUB','Tract','County']
 plt.figure()
 for i in range(4):
     sns.distplot(cuts[i],kde=False, color=colors[i],label=labels[i])
