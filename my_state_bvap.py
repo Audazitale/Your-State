@@ -28,9 +28,9 @@ from gerrychain.tree import recursive_tree_part
 def draw_plot(data, offset, edge_color, fill_color):
     pos = 5*np.arange(data.shape[1])+1+offset
     #bp = ax.boxplot(data, positions= pos, widths=0.3, patch_artist=True, manage_xticks=False)
-    bp = ax.boxplot(data, positions= pos,widths=.18, whis=[1,99],showfliers=False, patch_artist=True, manage_xticks=False,zorder=4)
+    bp = ax.boxplot(data, positions= pos,widths=.5, whis=[1,99],showfliers=False, patch_artist=True, manage_xticks=False,zorder=0)
     for element in ['boxes', 'whiskers', 'medians', 'caps']:
-        plt.setp(bp[element], color=edge_color,zorder=4)
+        plt.setp(bp[element], color=edge_color,zorder=0)
     for patch in bp['boxes']:
         patch.set(facecolor=fill_color,zorder=4)
 
@@ -132,10 +132,10 @@ plt.ylabel("Cut Edges")
 plt.show()
 
 fig, ax = plt.subplots()
-draw_plot(np.array(BVAPS[0]),-1.5,colors[0],None)
-draw_plot(np.array(BVAPS[1]),-.5,colors[1],None)
-draw_plot(np.array(BVAPS[2]),.5,colors[2],None)
-draw_plot(np.array(BVAPS[3]),1.5,colors[3],None)
+draw_plot(np.array(BVAPS[0]),-1.5,colors[0],'w')
+draw_plot(np.array(BVAPS[1]),-.5,colors[1],'w')
+draw_plot(np.array(BVAPS[2]),.5,colors[2],'w')
+draw_plot(np.array(BVAPS[3]),1.5,colors[3],'w')
 plt.ylabel("BVAP%")
 for i in range(4):
     plt.plot([],[],color=colors[i],label=labels[i])
