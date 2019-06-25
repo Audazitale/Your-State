@@ -55,17 +55,18 @@ pop_col = "TOTPOP"
 
 graph_list = [County_graph,COUSUB_graph,Tract_graph,BG_graph]
 
+vap_list = ["VAP","VA","VAP","VAP"]
 totpop = [0,0,0,0]
 for i in range(4):
     graph=graph_list[i]
     
     for n in graph.nodes():
         graph.node[n]["BVAP"] = int(graph.node[n]["BVAP"])
-        graph.node[n]["VAP"] = int(graph.node[n]["VAP"])
+        graph.node[n][vap_list[i]] = int(graph.node[n][vap_list[i]])
         graph.node[n]["TOTPOP"] = int(graph.node[n]["TOTPOP"])
         totpop[i] += graph.node[n]["TOTPOP"]
         
-        graph.node[n]["nBVAP"] = graph.node[n]["VAP"]- graph.node[n]["nBVAP"]
+        graph.node[n]["nBVAP"] = graph.node[n][vap_list[i]]- graph.node[n]["BVAP"]
 
 starts = []
 for i in range(4):
